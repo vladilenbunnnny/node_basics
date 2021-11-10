@@ -1,12 +1,17 @@
-//Modules
-// Common JS - every file in NODE is a module
-const { vlad, mom, dad } = require("./4-names");
-const sayHi = require("./5-utils");
-const data = require("./6-alternative-flavor");
+const http = require("http");
 
-console.log(mom);
-sayHi(vlad);
-sayHi(mom);
-sayHi(dad);
+const server = http.createServer((req, res) => {
+  if (req.url === "/") {
+    res.end("Welcome to our home page!!!");
+  } else if (req.url === "/about") {
+    res.end("This is out ABOUT page");
+  } else {
+    res.end(`
+  <h1>Opps!!</h1>
+  <p>This page doesn't exist</p>
+  <a href="/">Home</a>
+  `);
+  }
+});
 
-console.log(data);
+server.listen(7000);
