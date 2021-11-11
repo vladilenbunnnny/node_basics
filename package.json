@@ -1,0 +1,27 @@
+{
+  "name": "firsttutorial",
+  "version": "1.0.0",
+  "description": "Learning Node.js basics",
+  "main": "1-intro.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js" 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vladilenbunnnny/node_basics.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vladilenbunnnny/node_basics/issues"
+  },
+  "homepage": "https://github.com/vladilenbunnnny/node_basics#readme",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
