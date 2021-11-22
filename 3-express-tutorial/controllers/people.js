@@ -4,7 +4,7 @@ const getPeople = (req, res) => {
   res.status(200).json({ success: true, data: people });
 };
 
-const createPeerson = (req, res) => {
+const createPerson = (req, res) => {
   const { name } = req.body;
 
   if (!name) {
@@ -58,7 +58,7 @@ const deletePerson = (req, res) => {
 
 module.exports = {
   getPeople,
-  createPeerson,
+  createPerson,
   createPostman,
   editPerson,
   deletePerson,

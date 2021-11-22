@@ -1,21 +1,25 @@
 const express = require("express");
 const router = express.Router();
 let { people } = require("../data");
-const { getPeople, createPostman, createPeerson, editPerson, deletePerson } = require("../controllers/people");
+const { getPeople, createPostman, createPerson, editPerson, deletePerson } = require("../controllers/people");
 
-//GETS
-router.get("/", getPeople);
+// //GETS
+// router.get("/", getPeople);
 
-//POSTS
-router.post("/", createPeerson);
+// //POSTS
+// router.post("/", createPerson);
 
-router.post("/postman", createPostman);
+// router.post("/postman", createPostman);
 
-//PUTS
-router.put("/:id", editPerson);
+// //PUTS
+// router.put("/:id", editPerson);
 
-//DELETE
-router.delete("/:id", deletePerson);
+// //DELETE
+// router.delete("/:id", deletePerson);
+
+router.route("/").get(getPeople).post(createPerson);
+router.route("/postman").post(createPostman);
+router.route("/:id").put(editPerson).delete(deletePerson);
 
 module.exports = router;
 
