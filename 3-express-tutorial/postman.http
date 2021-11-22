@@ -10,9 +10,30 @@ GET http://localhost:5000/api/people HTTP/1.1
 
 
 ###
-POST http://localhost:5000/api/postman/people HTTP/1.1
+POST http://localhost:5000/api/people/postman HTTP/1.1
 content-type: application/json
 
 {
   "name":"V"
 }
+
+###
+POST http://localhost:5000/login HTTP/1.1
+content-type: application/json
+
+{
+  "name":"V"
+}
+
+###
+PUT http://localhost:5000/api/people/4 HTTP/1.1
+content-type: application/json
+
+{
+  "name":"V"
+}
+
+###
+DELETE http://localhost:5000/api/people/4 HTTP/1.1
+content-type: application/json
+
