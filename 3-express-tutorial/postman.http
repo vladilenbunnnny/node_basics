@@ -1,0 +1,18 @@
+POST http://localhost:5000/api/people HTTP/1.1
+content-type: application/json
+
+{
+  "name":"Vlad"
+}
+
+###
+GET http://localhost:5000/api/people HTTP/1.1
+
+
+###
+POST http://localhost:5000/api/postman/people HTTP/1.1
+content-type: application/json
+
+{
+  "name":"V"
+}

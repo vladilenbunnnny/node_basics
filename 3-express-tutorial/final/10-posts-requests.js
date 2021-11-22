@@ -25,7 +25,15 @@ app.post("/api/people", (req, res) => {
     res.status(401).json({ success: false, msg: "Empty" });
   }
 
-  res.status(201).json({ success: true, person: name });
+  res.status(201).json({ success: true, person: name, msg: "Created" });
+});
+
+app.post("/api/postman/people", (req, res) => {
+  const { name } = req.body;
+  if (!name) {
+    res.status(401).json({ sucess: false, msg: "no input" });
+  }
+  res.status(200).send({ sucess: true, data: [...people, name] });
 });
 
 app.post("/login", (req, res) => {
