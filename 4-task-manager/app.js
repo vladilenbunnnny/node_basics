@@ -1,1 +1,33 @@
-console.log('Task Manager App')
+const express = require("express");
+const app = express();
+////DB
+const connectDB = require("./db/connect");
+///ENV
+require("dotenv").config();
+
+//Import routes
+const taskRoutes = require("./routes/tasks");
+
+//Middleware
+app.use(express.json());
+
+//ROUTES
+
+app.use("/api/v1/tasks", taskRoutes);
+
+//SERVER
+const port = 8080;
+
+const start = async () => {
+  try {
+    await connectDB(process.env.MONGO_URI).then(() => {
+      console.log("Connected to MongoDB...");
+    });
+    app.listen(port, () => {
+      console.log(`Server on port ${port}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+start();
