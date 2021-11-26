@@ -9,6 +9,7 @@ require("dotenv").config();
 const taskRoutes = require("./routes/tasks");
 
 //Middleware
+app.use(express.static("./public"));
 app.use(express.json());
 
 //ROUTES
