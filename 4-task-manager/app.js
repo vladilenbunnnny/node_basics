@@ -6,6 +6,7 @@ const connectDB = require("./db/connect");
 require("dotenv").config();
 //My middleware exports
 const notFound = require("./middleware/not-found");
+const errorHandlerMiddleware = require("./middleware/error-handler");
 
 //Import routes
 const taskRoutes = require("./routes/tasks");
@@ -19,6 +20,8 @@ app.use(express.json());
 app.use("/api/v1/tasks", taskRoutes);
 
 app.use(notFound);
+
+app.use(errorHandlerMiddleware);
 
 //SERVER
 const port = 8080;
