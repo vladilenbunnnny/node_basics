@@ -24,7 +24,7 @@ app.use(notFound);
 app.use(errorHandlerMiddleware);
 
 //SERVER
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 const start = async () => {
   try {

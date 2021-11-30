@@ -2,6 +2,8 @@
 const Task = require("../models/Task");
 //async Wrapper
 const asyncWrapper = require("../middleware/async");
+//Custom error
+const { createCustomError } = require("../errors/custom-error");
 //Write controllers functions
 
 // const getTasks = async (req, res) => {
@@ -55,11 +57,17 @@ const createTask = asyncWrapper(async (req, res) => {
 //   }
 // };
 
-const getSingleTask = asyncWrapper(async (req, res) => {
+const getSingleTask = asyncWrapper(async (req, res, next) => {
   const { id: taskID } = req.params;
   const task = await Task.findOne({ _id: taskID });
   if (!task) {
-    return res.status(404).json({ msg: `No task with ID ${taskID}` });
+    // const error = new Error("not Found");
+    // error.status = 404;
+    // return next(error);
+    //// or
+    //return res.status(404).json({ msg: `No task with ID ${taskID}` });
+    // or:
+    return next(createCustomError(`No task with ID ${taskID}`, 404));
   } else {
     res.status(200).json({ task });
   }
@@ -81,11 +89,14 @@ const getSingleTask = asyncWrapper(async (req, res) => {
 //   });
 // };
 
-const updateTask = asyncWrapper(async (req, res) => {
+const updateTask = asyncWrapper(async (req, res, next) => {
   const { id: taskID } = req.params;
   const query = { _id: taskID };
   const data = req.body;
   const task = await Task.findOneAndUpdate(query, data, { new: true, runValidators: true });
+  if (!task) {
+    return next(createCustomError(`No task with id ${taskID}`, 404));
+  }
   res.status(200).json({ task });
 });
 
@@ -107,11 +118,11 @@ const updateTask = asyncWrapper(async (req, res) => {
 //   }
 // };
 
-const deleteTask = asyncWrapper(async (req, res) => {
+const deleteTask = asyncWrapper(async (req, res, next) => {
   const { id: taskID } = req.params;
   const task = await Task.findOneAndDelete({ _id: taskID });
   if (!task) {
-    return res.status(404).json({ msg: `No task to delete with ID: ${taskID}` });
+    return next(createCustomError(`No task to delete with ID: ${taskID}`, 404));
   }
   res.status(200).json({ task: null, status: "success" });
 });
