@@ -3,7 +3,7 @@ const ProductsModel = require("../models/products");
 const getAllProducts = async (req, res) => {
   // throw new Error("testing errors");
   console.log(";;;;;;;;;;;;;;----;;;;;;;;;;");
-  const { featured, company, name, sort } = req.query;
+  const { featured, company, name, sort, select } = req.query;
 
   const queryObject = {};
   if (featured) {
@@ -21,6 +21,12 @@ const getAllProducts = async (req, res) => {
     console.log(sort);
     const sortList = sort.split(",").join(" ");
     results = results.sort(sortList);
+  } else {
+    result = result.sort("createdAt");
+  }
+  if (select) {
+    const selectList = select.split(",").join(" ");
+    results = results.select(selectList);
   }
   const products = await results;
 
