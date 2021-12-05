@@ -16,8 +16,9 @@ const getAllProducts = async (req, res) => {
   if (name) {
     queryObject.name = { $regex: name, $options: "i" };
   }
-  //console.log(queryObject);
+
   let results = ProductsModel.find(queryObject);
+
   ////SORTING
   if (sort) {
     //console.log(sort);
@@ -40,9 +41,28 @@ const getAllProducts = async (req, res) => {
   //RANGE
   if (numericFilters) {
     console.log(numericFilters);
+    const operatorMap = {
+      ">": "$gt",
+      ">=": "$gte",
+      "=": "$eq",
+      "<": "$lt",
+      "<=": "$lte",
+    };
+    const options = ["price", "rating"];
+    const regEx = /\b(>|>=|=|<|<=)\b/g;
+    let filters = numericFilters.replace(regEx, match => `-${operatorMap[match]}-`);
+    console.log(filters);
+
+    filters = filters.split(",").forEach(item => {
+      const [filterName, filterOperator, filterNumber] = item.split("-");
+      if (options.includes(filterName)) {
+        queryObject[filterName] = { [filterOperator]: Number(filterNumber) };
+
+        results = ProductsModel.find(queryObject);
+      }
+    });
   }
   const products = await results;
-  //console.log(queryObject);
 
   res.status(200).json({ products, ngHits: products.length });
 };
