@@ -1,12 +1,12 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const CustomAPIError = require("../errors/custom-error");
+const { UnathenticatedError } = require("../errors");
 
 const authenticationMiddleWare = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    throw new CustomAPIError("Not authorized", 401);
+    throw new UnathenticatedError("Not authorized!");
   }
 
   const token = authHeader.split(" ")[1];
@@ -19,7 +19,7 @@ const authenticationMiddleWare = async (req, res, next) => {
     //console.log(`-----  ${JSON.stringify(req.user)}  =====`);
     next();
   } catch (error) {
-    throw new CustomAPIError("Prohibited", 401);
+    throw new UnathenticatedError("Prohibited", 401);
   }
 };
 

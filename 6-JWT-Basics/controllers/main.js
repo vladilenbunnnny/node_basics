@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const CustomAPIError = require("../errors/custom-error");
+const { BadRequest, UnathenticatedError } = require("../errors");
 
 const login = async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
-    throw new CustomAPIError("Please provide email and password", 400);
+    throw new BadRequest("Please provide email and password");
   }
   //Just for demo purposes (normally we get ID from DB):
   const id = new Date().getDate();
@@ -26,7 +26,7 @@ const dashboard = async (req, res) => {
     //console.log(`${JSON.stringify(req.user)}`);
     res.status(200).json({ msg: `Hello, ${req.user.username}`, secret: `Here is your authorized data, your lucky number is ${luckyNumber}` });
   } catch (error) {
-    throw new CustomAPIError("Prohibited", 401);
+    throw new UnathenticatedError("Prohibited");
   }
 };
 
