@@ -1,12 +1,16 @@
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError } = require("../errors");
-const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const register = async (req, res) => {
   try {
     const user = await User.create({ ...req.body });
-    res.status(StatusCodes.CREATED).json({ user });
+    //const token = jwt.sign({ userID: user._id, name: user.name }, process.env.JWT_SECRET, { expiresIn: "30d" });
+    //console.log(token);
+    const token = user.createJWT();
+    res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
   } catch (error) {
     console.log(error);
   }
